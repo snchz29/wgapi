@@ -10,7 +10,7 @@ class URLBuilder:
         return self
 
     def set_application_id(self, app_id):
-        self.url += 'application_id=' + app_id
+        self.url += '__application_id=' + app_id
         return self
 
     def add_parameter(self, param, value):
