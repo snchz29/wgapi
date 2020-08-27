@@ -1,53 +1,30 @@
 import MainAPI
-import URLBuilder
+
 
 class Players(MainAPI.MainAPI):
     def get_players(self, search, fields=None, language='ru', limit=100, type_='startswith'):
-        builder = URLBuilder.URLBuilder('wot')
-        builder.set_request_target('account/list') \
-            .set_application_id(self.__application_id) \
-            .add_parameter('search', search) \
-            .add_parameter('fields', fields) \
-            .add_parameter('language', language) \
-            .add_parameter('limit', str(limit)) \
-            .add_parameter('type', type_)
-        return self.get_json(builder.url)
+        url = 'wot/account/list/'
+        req = self._get_json(url, search=search, fields=self._format(fields), language=language, limit=limit,
+                             type=type_)
+        return self._dump(req)
 
     def get_player_id(self, search: str):
-        builder = URLBuilder.URLBuilder('wot')
-        builder.set_request_target('account/list') \
-            .set_application_id(self.__application_id) \
-            .add_parameter('search', search)
-        return self.get_json(builder.url)['data'][0]['account_id']
+        url = 'wot/account/list/'
+        return self._get_json(url, search=search)['data'][0]['account_id']
 
     def get_personal_data(self, account_id, extra=None, fields=None, language='ru'):
-        builder = URLBuilder.URLBuilder('wot')
-        builder.set_request_target('account/info') \
-            .set_application_id(self.__application_id) \
-            .add_parameter('account_id', account_id) \
-            .add_parameter('__access_token', self.__access_token) \
-            .add_parameter('extra', extra) \
-            .add_parameter('fields', fields) \
-            .add_parameter('language', language)
-        return self.get_json(builder.url)
+        url = 'wot/account/info/'
+        req = self._get_json(url, account_id=account_id, extra=self._format(extra), fields=self._format(fields),
+                             language=language, access_token=self._access_token)
+        return self._dump(req)
 
     def get_vehicles(self, account_id, fields=None, language='ru', tank_id=None):
-        builder = URLBuilder.URLBuilder('wot')
-        builder.set_request_target('account/tanks') \
-            .set_application_id(self.__application_id) \
-            .add_parameter('account_id', account_id) \
-            .add_parameter('__access_token', self.__access_token) \
-            .add_parameter('field', fields) \
-            .add_parameter('language', language) \
-            .add_parameter('tank_id', tank_id)
-        return self.get_json(builder.url)
+        url = 'wot/account/tanks/'
+        req = self._get_json(url, account_id=account_id, fields=self._format(fields), language=language,
+                             tank_id=tank_id, access_token=self._access_token)
+        return self._dump(req)
 
     def get_achievements(self, account_id, fields=None, language='ru'):
-        builder = URLBuilder.URLBuilder('wot')
-        builder.set_request_target('account/achievements') \
-            .set_application_id(self.__application_id) \
-            .add_parameter('account_id', account_id) \
-            .add_parameter('__access_token', self.__access_token) \
-            .add_parameter('fields', fields) \
-            .add_parameter('language', language)
-        return self.get_json(builder.url)
+        url = 'wot/account/achievements/'
+        req = self._get_json(url, account_id=account_id, fields=self._format(fields), language=language)
+        return self._dump(req)
