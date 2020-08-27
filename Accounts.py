@@ -1,26 +1,13 @@
 import MainAPI
-import URLBuilder
 
 
 class Accounts(MainAPI.MainAPI):
     def get_accounts(self, search, fields=None, game=None, language='ru', limit=None, type_=None):
-        builder = URLBuilder.URLBuilder('wgn')
-        builder.set_request_target('list') \
-            .set_application_id(self.__application_id) \
-            .add_parameter('search', search) \
-            .add_parameter('fields', fields) \
-            .add_parameter('game', game) \
-            .add_parameter('language', language) \
-            .add_parameter('limit', limit) \
-            .add_parameter('type', type_)
-        return self.get_json(builder.url).json()
+        url = 'wgn/account/list'
+        req = self._get_json(url, search=search, fields=fields, game=game, language=language, limit=limit, type=type_)
+        return self._dump(req)
 
     def get_account_information(self, account_id, access_token=None, fields=None, language='ru'):
-        builder = URLBuilder.URLBuilder('wgn')
-        builder.set_request_target('info') \
-            .set_application_id(self.__application_id) \
-            .add_parameter('account_id', account_id) \
-            .add_parameter('__access_token', access_token) \
-            .add_parameter('fields', fields) \
-            .add_parameter('language', language)
-        return self.get_json(builder.url).json()
+        url = 'wgn/account/info'
+        req = self._get_json(url, account_id=account_id, access_token=access_token, fields=fields, language=language)
+        return self._dump(req)
