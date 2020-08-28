@@ -13,7 +13,9 @@ class MainAPI:
 
     def __format(self, par):
         if type(par) is list:
-            return ','.join(par)
+            return ','.join(map(str, par))
+        elif type(par) is str:
+            return par.replace(', ', ',').replace(' ', ',')
         else:
             return par
 

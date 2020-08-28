@@ -2,7 +2,7 @@ import MainAPI
 
 
 class Players(MainAPI.MainAPI):
-    def get_players(self, search, fields=None, language='ru', limit=100, type_='startswith'):
+    def get_players(self, search, fields=None, language='ru', limit=None, type_='startswith'):
         url = 'wot/account/list/'
         req = self._get_json(url, search=search, fields=fields, language=language, limit=limit, type=type_)
         return self._dump(req)

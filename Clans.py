@@ -8,10 +8,15 @@ class Clans(MainAPI.MainAPI):
                              search=search)
         return self._dump(req)
 
-    def get_details(self, clan_id, access_token=None, extra=None, fields=None, game=None, language='ru',
+    def get_clan_id(self, search):
+        url = 'wgn/clans/list/'
+        return self._get_json(url, search=search)['data'][0]['clan_id']
+
+    def get_details(self, clan_id, extra=None, fields=None, game=None, language='ru',
                     members_key=None):
         url = 'wgn/clans/info/'
-        req = self._get_json(url, clan_id=clan_id, access_token=access_token, extra=extra, fields=fields, game=game,
+        req = self._get_json(url, clan_id=clan_id, access_token=self._access_token, extra=extra, fields=fields,
+                             game=game,
                              language=language, members_key=members_key)
         return self._dump(req)
 
@@ -25,13 +30,12 @@ class Clans(MainAPI.MainAPI):
         req = self._get_json(url, fields=fields, game=game, language=language)
         return self._dump(req)
 
-    def get_message_board(self, access_token=None, fields=None, game=None):
+    def get_message_board(self, fields=None, game=None):
         url = 'wgn/clans/messageboard/'
-        req = self._get_json(url, access_token=access_token, fields=fields, game=game)
+        req = self._get_json(url, access_token=self._access_token, fields=fields, game=game)
         return self._dump(req)
 
     def get_history(self, account_id, fields=None, game=None, language=None):
         url = 'wgn/clans/memberhistory/'
-        req = self._get_json(url, fields=fields, game=game, language=language)
+        req = self._get_json(url, account_id=account_id, fields=fields, game=game, language=language)
         return self._dump(req)
-
