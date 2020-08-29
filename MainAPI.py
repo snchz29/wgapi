@@ -11,7 +11,8 @@ class MainAPI:
         with open('access_token', 'r') as f:
             self._access_token = json.load(f)
 
-    def __format(self, par):
+    @staticmethod
+    def __format(par):
         if type(par) is list:
             return ','.join(map(str, par))
         elif type(par) is str:
@@ -27,5 +28,6 @@ class MainAPI:
         r = requests.get(URL + ending, params=parameters, headers=config.HEADERS)
         return r.json()
 
-    def _dump(self, js):
+    @staticmethod
+    def _dump(js):
         return json.dumps(js, indent=2)
