@@ -25,7 +25,7 @@ if __name__ == '__main__':
 
     # 4. Clans
     c = Clans.Clans(config.APP_ID)
-    print(c.get_clans())
+    print(type(c.get_clans()))
     c_id = c.get_clan_id('YETTI')
     print(c_id)
     print(c.get_details(c_id))

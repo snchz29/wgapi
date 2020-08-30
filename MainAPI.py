@@ -27,7 +27,3 @@ class MainAPI:
             parameters[key] = self.__format(val)
         r = requests.get(URL + ending, params=parameters, headers=config.HEADERS)
         return r.json()
-
-    @staticmethod
-    def _dump(js):
-        return json.dumps(js, indent=2)
